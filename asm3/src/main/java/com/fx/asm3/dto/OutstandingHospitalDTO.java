@@ -9,17 +9,13 @@ public class OutstandingHospitalDTO {
     private String address;
     private String phone;
     private String description;
-    private String workingHours; // add working hours if necessary
-    private String importantNotes; // notes like key specialties, cost of consultation, etc.
 
-    // Constructor to match the query output
-    public OutstandingHospitalDTO(Integer id, String name, String address, String phone, String description, String workingHours, String importantNotes) {
+ // Constructor phù hợp với các tham số trong truy vấn
+    public OutstandingHospitalDTO(Integer id, String name, String address, String phone, String description) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.phone = phone;
         this.description = description;
-        this.workingHours = workingHours;
-        this.importantNotes = importantNotes;
     }
 }
