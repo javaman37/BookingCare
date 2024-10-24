@@ -7,10 +7,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fx.asm3.dto.AppointmentRequestDTO;
 import com.fx.asm3.dto.DepartmentDTO;
 import com.fx.asm3.dto.DoctorDTO;
 import com.fx.asm3.dto.HospitalDTO;
@@ -18,6 +21,7 @@ import com.fx.asm3.dto.OutstandingDepartmentDTO;
 import com.fx.asm3.dto.OutstandingHospitalDTO;
 import com.fx.asm3.dto.PersonalInfoDTO;
 import com.fx.asm3.dto.SearchResultDTO;
+import com.fx.asm3.service.AppointmentService;
 import com.fx.asm3.service.DepartmentService;
 import com.fx.asm3.service.DoctorService;
 import com.fx.asm3.service.HospitalService;
@@ -38,6 +42,9 @@ public class UserController {
 
 	@Autowired
 	private DepartmentService departmentService;
+	
+	@Autowired
+	private AppointmentService appointmentService;
 
 	// Danh sách khoa nổi bật có lịch đặt nhiều
 	@GetMapping("/outstanding-department")
@@ -93,6 +100,16 @@ public class UserController {
     public ResponseEntity<List<DoctorDTO>> searchDoctorsBySpecialization(@RequestParam("keyword") String keyword) {
         List<DoctorDTO> doctors = doctorService.searchDoctorsBySpecialization(keyword);
         return ResponseEntity.ok(doctors);
+    }
+	
+	@PostMapping("/book-appointment")
+    public ResponseEntity<String> bookAppointment(@RequestBody AppointmentRequestDTO requestDTO) {
+        try {
+            appointmentService.bookAppointment(requestDTO);
+            return ResponseEntity.ok("Appointment booked successfully!");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error booking appointment");
+        }
     }
 
 }
