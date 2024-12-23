@@ -55,7 +55,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		user.setPhone(userDTO.getPhone());
 		user.setAddress(userDTO.getAddress());
 		user.setPassword(passwordEncoder.encode(userDTO.getPassword())); // Mã hóa mật khẩu
-
+		user.setRole(userDTO.getRole());
 		// Lưu người dùng vào cơ sở dữ liệu
 		return userDAO.save(user);
 	}

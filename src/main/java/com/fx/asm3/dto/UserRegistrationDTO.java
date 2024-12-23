@@ -1,5 +1,7 @@
 package com.fx.asm3.dto;
 
+import com.fx.asm3.entity.Role;
+
 import lombok.Data;
 
 //đăng ký tài khoản
@@ -15,4 +17,5 @@ public class UserRegistrationDTO {
     private String description;
     private String specialization;
     private int idDepartment;
+    private Role role;
 }

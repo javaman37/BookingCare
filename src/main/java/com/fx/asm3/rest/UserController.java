@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fx.asm3.config.CustomUserDetails;
 import com.fx.asm3.dto.AppointmentRequestDTO;
 import com.fx.asm3.dto.DepartmentDTO;
 import com.fx.asm3.dto.DoctorDTO;
@@ -102,14 +103,16 @@ public class UserController {
         return ResponseEntity.ok(doctors);
     }
 	
-	@PostMapping("/book-appointment")
-    public ResponseEntity<String> bookAppointment(@RequestBody AppointmentRequestDTO requestDTO) {
-        try {
-            appointmentService.bookAppointment(requestDTO);
-            return ResponseEntity.ok("Appointment booked successfully!");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error booking appointment");
-        }
+	@PostMapping("/book")
+    public ResponseEntity<String> bookAppointment(@RequestBody AppointmentRequestDTO appointmentRequestDTO,
+                                                  Authentication authentication) {
+        // Lấy userId từ JWT (đã đăng nhập)
+        CustomUserDetails userDetails = (CustomUserDetails) authentication.getPrincipal();
+        Integer userId = userDetails.getUserId();
+
+        // Tạo lịch khám
+        String message = appointmentService.createOrUpdateAppointment(appointmentRequestDTO, userId);
+        return ResponseEntity.ok(message);
     }
 
 }

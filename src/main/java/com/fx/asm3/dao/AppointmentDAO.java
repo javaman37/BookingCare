@@ -10,5 +10,7 @@ import com.fx.asm3.entity.Appointment;
 @Repository
 public interface AppointmentDAO extends JpaRepository<Appointment, Integer> {
     List<Appointment> findByUserId(Integer userId);
+
+	List<Appointment> findByDoctorId(Integer doctorId);
 }
 

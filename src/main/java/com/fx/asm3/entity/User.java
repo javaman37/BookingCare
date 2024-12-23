@@ -39,8 +39,9 @@ public class User {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "role", length = 250)
-    private String role;
+    private Role role;
 
     @Column(name = "is_active")
     private boolean isActive;
